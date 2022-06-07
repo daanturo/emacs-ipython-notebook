@@ -438,11 +438,6 @@ Shift in list parlance means removing the front."
 (cl-defmethod ein:worksheet-undo-setup ((ws ein:worksheet))
   (with-current-buffer (ein:worksheet--get-buffer ws)
     (setq buffer-local-enable-undo ein:worksheet-enable-undo)
-    (let ((undo-binding (key-binding (kbd "C-/"))))
-      (if buffer-local-enable-undo
-          (unless (eq undo-binding 'undo)
-            (setq buffer-local-enable-undo nil)
-            (ein:display-warning-once (format "Disabling undo for %s" undo-binding)))))
     (ein:worksheet-reinstall-undo-hooks ws)
     (if buffer-local-enable-undo
         (progn
